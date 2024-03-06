@@ -29,6 +29,7 @@
 #include "menu.h"
 #include "service_manager.h"
 #include "errdisp.h"
+#include "spiffThread.h"
 #include "utils.h"
 #include "sleep.h"
 #include "MyThread.h"
@@ -267,6 +268,7 @@ int main(void)
     MyThread *menuThread = menuCreateThread();
     MyThread *taskRunnerThread = taskRunnerCreateThread();
     MyThread *errDispThread = errDispCreateThread();
+    MyThread *spiffThread = spiffCreateThread();
     bootdiagCreateThread();
 
     if (R_FAILED(ServiceManager_Run(services, notifications, NULL)))
@@ -278,6 +280,7 @@ int main(void)
 
     MyThread_Join(taskRunnerThread, -1LL);
     MyThread_Join(errDispThread, -1LL);
+    MyThread_Join(spiffThread, -1LL);
 
     return 0;
 }
